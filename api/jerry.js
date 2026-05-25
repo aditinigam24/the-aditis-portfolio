@@ -1,3 +1,4 @@
+// api/jerry.js
 const jerryTopics = [
   { keywords: ["who", "about", "introduce", "aditi", "background"], answer: "Aditi Nigam is a Full Stack Developer and Generative AI explorer — a B.Tech Computer Science student, entrepreneur, and community leader. She builds design-led, impactful digital products and is open to internships and collaborations in 2026." },
   { keywords: ["skill", "stack", "tech", "tool", "language", "framework"], answer: "Her toolkit includes React, Next.js, TypeScript, Node.js, Express, MySQL, Tailwind, REST APIs, Python, and Generative AI (LLMs & agents). She ships from database to pixel with strong UI/UX thinking." },

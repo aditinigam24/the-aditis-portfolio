@@ -1,3 +1,4 @@
+<!-- SETUP.md -->
 # 🚀 Setup Guide - Email & Jerry Chatbot Integration
 
 Your portfolio now has **email notifications** and an **AI chatbot** (Jerry) powered by Groq. Here's what's been set up and what you need to do.
@@ -68,7 +69,7 @@ npm run dev:all
 
 ### Step 3: Test It!
 
-1. Open [http://localhost:5173](http://localhost:5173) (or the Vite port shown)
+1. Open [https://the-aditis-portfolio.onrender.com](https://the-aditis-portfolio.onrender.com) (or the Vite port shown)
 2. **Test Email:**
    - Scroll to "Communication Terminal"
    - Fill the form and submit

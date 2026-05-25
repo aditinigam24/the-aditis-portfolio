@@ -1,3 +1,4 @@
+<!-- README.md -->
 # The Aditi's Portfolio
 
 A cinematic, futuristic portfolio for **Aditi Nigam** — immersive AI universe experience with holographic UI, Jerry AI assistant, real portfolio content, **email notifications**, and AI-powered responses.
@@ -37,7 +38,7 @@ A cinematic, futuristic portfolio for **Aditi Nigam** — immersive AI universe 
    npm run dev:all
    ```
 
-Open `http://localhost:5173` in your browser.
+Open `https://the-aditis-portfolio.onrender.com` in your browser.
 
 ## 📋 Features
 

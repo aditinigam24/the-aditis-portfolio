@@ -1,10 +1,11 @@
+// src/components/Contact.tsx
 import { motion } from "framer-motion";
 import { Mail, Send, Share2, CheckCircle, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { site } from "../data/portfolio";
 import { SectionHeader } from "./SectionHeader";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+const API_URL = import.meta.env.VITE_API_URL || "https://the-aditis-portfolio.onrender.com";
 
 export function Contact() {
   const [sent, setSent] = useState(false);

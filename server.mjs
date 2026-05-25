@@ -1,3 +1,4 @@
+// server.mjs
 import 'dotenv/config';
 import express from "express";
 import cors from "cors";
@@ -276,7 +277,7 @@ app.get("/health", (req, res) => {
 // ============ START SERVER ============
 const PORT = parseInt(process.env.SERVER_PORT || "3001", 10);
 app.listen(PORT, () => {
-  console.log(`✨ Server running on http://localhost:${PORT}`);
+  console.log(`✨ Server running on https://the-aditis-portfolio.onrender.com`);
   console.log(`📧 Email configured: ${!!process.env.EMAIL_USER}`);
   console.log(`🤖 Groq API configured: ${!!process.env.GROQ_API_KEY}`);
 });

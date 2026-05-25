@@ -1,3 +1,4 @@
+<!-- INTEGRATION_COMPLETE.md -->
 # ✅ Email & Jerry Chatbot Integration - Complete Setup Summary
 
 ## 📝 What Was Done
@@ -135,7 +136,7 @@ npm run dev:all
 ```
 
 ### 3. Test
-- Open http://localhost:5173
+- Open https://the-aditis-portfolio.onrender.com
 - Try contact form → should send email
 - Click Jerry → ask questions → should get AI responses
 
