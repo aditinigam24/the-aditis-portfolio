@@ -50,9 +50,18 @@ export function Jerry() {
         body: JSON.stringify({ message: trimmed }),
       });
 
-      if (!response.ok) throw new Error("Failed to get response");
-      
+      // Detailed logging for debugging deployment issues
+      console.log("/api/jerry request URL:", `${apiUrl}/api/jerry`);
+      console.log("/api/jerry response status:", response.status, response.statusText);
+
+      if (!response.ok) {
+        const text = await response.text();
+        console.error("/api/jerry non-ok response body:", text);
+        throw new Error(`Failed to get response: ${response.status} ${response.statusText} - ${text}`);
+      }
+
       const data = await response.json();
+      console.log("/api/jerry response data:", data);
       const reply = data.reply || "Sorry, I couldn't generate a response. Please try again.";
       
       setMessages((m) => [...m, { id: id(), role: "assistant", text: reply }]);
