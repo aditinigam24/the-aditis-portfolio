@@ -1,4 +1,5 @@
 import express from "express";
+import type { Request, Response } from "express";
 import cors from "cors";
 import nodemailer from "nodemailer";
 
@@ -79,7 +80,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // ============ EMAIL ENDPOINT ============
-app.post("/api/send-email", async (req, res) => {
+app.post("/api/send-email", async (req: Request, res: Response) => {
   try {
     const { name, email, question, message } = req.body;
 
@@ -125,7 +126,7 @@ app.post("/api/send-email", async (req, res) => {
 });
 
 // ============ GROQ API ENDPOINT ============
-app.post("/api/jerry", async (req, res) => {
+app.post("/api/jerry", async (req: Request, res: Response) => {
   try {
     const { message } = req.body;
 
@@ -259,7 +260,7 @@ INSTRUCTIONS:
 }
 
 // ============ HEALTH CHECK ============
-app.get("/health", (req, res) => {
+app.get("/health", (req: Request, res: Response) => {
   res.json({
     status: "ok",
     timestamp: new Date().toISOString(),
