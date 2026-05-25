@@ -42,7 +42,8 @@ export function Jerry() {
       await typewriterDelay(trimmed);
       
       // Call the server endpoint for AI-powered response
-      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3001";
+      // Use a relative path by default so the frontend works when deployed on the same origin (Vercel).
+      const apiUrl = import.meta.env.VITE_API_URL ?? "";
       const response = await fetch(`${apiUrl}/api/jerry`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
