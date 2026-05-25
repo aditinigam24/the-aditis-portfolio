@@ -75,9 +75,15 @@ const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    pass: process.env.EMAIL_PASS ? process.env.EMAIL_PASS.replace(/\s+/g, "") : process.env.EMAIL_PASS,
   },
 });
+
+// Verify transporter connection at startup to surface config issues early
+transporter.verify().then(
+  () => console.log("📧 Nodemailer transporter verified"),
+  (err) => console.warn("📧 Nodemailer transporter verification failed:", err && err.message ? err.message : err)
+);
 
 // ============ EMAIL ENDPOINT ============
 app.post("/api/send-email", async (req, res) => {

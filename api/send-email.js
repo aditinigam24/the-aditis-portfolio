@@ -1,9 +1,19 @@
+// api/send-email.js
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
-  auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS ? process.env.EMAIL_PASS.replace(/\s+/g, "") : process.env.EMAIL_PASS,
+  },
 });
+
+// Verify transporter so deployment issues surface quickly
+transporter.verify().then(
+  () => console.log("📧 api/send-email: transporter verified"),
+  (err) => console.warn("📧 api/send-email: transporter verification failed:", err && err.message ? err.message : err)
+);
 
 module.exports = async (req, res) => {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
