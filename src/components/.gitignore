@@ -1,0 +1,5 @@
+# src/components/.gitignore
+src/components/.gitgnore
+.env
+node_modules
+dist
