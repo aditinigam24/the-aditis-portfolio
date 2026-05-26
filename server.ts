@@ -112,6 +112,9 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: emailPass,
   },
+  connectionTimeout: 10000, // 10 seconds
+  greetingTimeout: 10000,   // 10 seconds
+  socketTimeout: 10000,     // 10 seconds
 });
 
 // Verify transporter connection at startup
@@ -180,8 +183,8 @@ app.post("/api/send-email", async (req: Request, res: Response, next: NextFuncti
         `,
       });
     } catch (err: any) {
-      logger.error("Failed sending message notification to administrator email", err);
-      throw new ServiceUnavailableError("Failed to deliver your email message. Please try again later.");
+      logger.error("Failed sending message notification to administrator email. Details:", err);
+      throw new ServiceUnavailableError(`Failed to deliver email: ${err.message || err}`);
     }
 
     // Send confirmation to visitor

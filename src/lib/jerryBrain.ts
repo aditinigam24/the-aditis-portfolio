@@ -5,15 +5,37 @@ import {
   type JerryTopic,
 } from "../data/jerry.ts";
 
-function scoreTopic(query: string, topic: JerryTopic) {
-  const normalized = query.toLowerCase();
-  return topic.keywords.reduce(
-    (score, keyword) => (normalized.includes(keyword) ? score + 1 : score),
-    0,
-  );
+/** Normalize a string: lowercase, strip punctuation */
+function normalize(text: string): string {
+  return text.toLowerCase().replace(/[^a-z0-9\s]/g, " ").trim();
 }
 
-export function getJerryReply(input: string) {
+/** Score a topic against the user query using weighted keyword matching */
+function scoreTopic(query: string, topic: JerryTopic): number {
+  const normalizedQuery = normalize(query);
+  const queryWords = normalizedQuery.split(/\s+/);
+
+  let score = 0;
+  for (const keyword of topic.keywords) {
+    const normalizedKeyword = normalize(keyword);
+    // Exact substring match (highest weight)
+    if (normalizedQuery.includes(normalizedKeyword)) {
+      score += normalizedKeyword.includes(" ") ? 3 : 2; // multi-word phrases worth more
+    } else {
+      // Partial word match — any query word starts with keyword or vice versa
+      for (const word of queryWords) {
+        if (word.startsWith(normalizedKeyword) || normalizedKeyword.startsWith(word)) {
+          score += 1;
+          break;
+        }
+      }
+    }
+  }
+  return score;
+}
+
+/** Get Jerry's snappy reply based on keyword scoring */
+export function getJerryReply(input: string): string {
   const query = input.trim();
   if (!query) return jerryIntro;
 
@@ -28,12 +50,15 @@ export function getJerryReply(input: string) {
     }
   }
 
-  return bestScore > 0 && best ? best.answer : jerryFallback;
+  // Require at least a score of 1 to avoid random weak matches
+  return bestScore >= 1 && best ? best.answer : jerryFallback;
 }
 
+/** Jerry's typing delay — quick like a mouse darting! */
 export function typewriterDelay(text: string): Promise<void> {
   return new Promise((resolve) => {
-    const baseDelay = Math.min(text.length * 10, 500);
+    // Snappy: max 350ms, scales gently with text length
+    const baseDelay = Math.min(text.length * 8, 350);
     setTimeout(resolve, baseDelay);
   });
 }

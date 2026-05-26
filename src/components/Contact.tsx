@@ -21,27 +21,33 @@ export function Contact() {
     const question = String(data.get("question") ?? "");
     const message = String(data.get("message") ?? "");
 
-    setLoading(true);
-    setError("");
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 25000); // 25s timeout for Render spin-up
 
     try {
       const response = await fetch(`${API_URL}/api/send-email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, question, message }),
+        signal: controller.signal,
       });
 
+      clearTimeout(timeoutId);
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || "Failed to send email");
+        throw new Error(result.message || "Failed to send email");
       }
 
       setSent(true);
       form.reset();
       setTimeout(() => setSent(false), 5000);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to send email");
+    } catch (err: any) {
+      if (err.name === "AbortError") {
+        setError("Connection timed out. The server is waking up from sleep mode. Please try transmitting your message again in a few seconds!");
+      } else {
+        setError(err instanceof Error ? err.message : "Failed to send email");
+      }
       console.error("Email error:", err);
     } finally {
       setLoading(false);
